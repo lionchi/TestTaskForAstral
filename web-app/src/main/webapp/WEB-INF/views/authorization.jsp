@@ -6,27 +6,32 @@
 <html>
 <head>
     <title>Авторизация</title>
-    <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
-    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
 </head>
 <body>
-<h3>Авторизация</h3>
-<%--@elvariable id="user" type="com.gavrilov.model.dto.UserDTO"--%>
-<form:form method="POST" action="/login-user" modelAttribute="user">
-    <table>
-        <tr>
-            <td><form:label path="login">Login</form:label></td>
-            <td><form:input path="login"/></td>
-        </tr>
-        <tr>
-            <td><form:label path="password">Password</form:label></td>
-            <td><form:input  type="password" path="password"/></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Вход"/></td>
-        </tr>
-    </table>
-</form:form>
-</div>
+<h2>Авторизация</h2>
+<form action="/authorization" method="post">
+    <c:if test="${param.error != null}">
+        <p style='color:red'>
+            Неправильный пароль или логин.
+        </p>
+    </c:if>
+    <c:if test="${param.logout != null}">
+        <p style='color:blue'>
+            Вы вышли из системы.
+        </p>
+    </c:if>
+    <p>
+        <label for="username">Логин</label>
+        <input type="text" id="username" name="username"/>
+    </p>
+    <p>
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password"/>
+    </p>
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+    <button type="submit">Вход</button> или <a href="<c:url value='/registration'/>">Зарегистрироваться</a>
+</form>
 </body>
 </html>

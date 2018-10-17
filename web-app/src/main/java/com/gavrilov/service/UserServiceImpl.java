@@ -1,10 +1,10 @@
 package com.gavrilov.service;
 
+import com.gavrilov.dao.UserDao;
 import com.gavrilov.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -12,15 +12,24 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private UserDao dao;
 
     public User findById(Long id) {
-        return entityManager.find(User.class, id);
+        return dao.findById(id);
     }
 
     public List<User> findAllUsers() {
-        return entityManager.createQuery("select u from User as u", User.class).getResultList();
+        return dao.getAllUser();
+    }
+
+    @Override
+    public void saveUser(User user) {
+        dao.create(user);
+    }
+
+    @Override
+    public boolean checkUniqueLogin(String newLogin) {
+        return dao.checkUniqueLogin(newLogin);
     }
 }

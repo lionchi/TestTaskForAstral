@@ -1,13 +1,21 @@
-package com.gavrilov.configuration;
+package com.gavrilov.configuration.security;
 
+import com.gavrilov.common.MyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
 
@@ -28,17 +36,43 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("SELECT u.login, r.rolename FROM user u, user_role r WHERE u.user_role_id = r.id and login = ?");
     }
 
+
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
-   /* @Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/login-user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-                .and().formLogin();
+                .antMatchers("/registration").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .addFilterBefore(new MyFilter(), ChannelProcessingFilter.class)
+                .formLogin()
+                .loginPage("/authorization")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
 
-    }*/
+    }
+
+    @Bean
+    WebMvcConfigurer myWebMvcConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addViewControllers(ViewControllerRegistry registry) {
+                ViewControllerRegistration r = registry.addViewController("/authorization");
+                r.setViewName("authorization");
+            }
+        };
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/static/**");
+    }
+
 }

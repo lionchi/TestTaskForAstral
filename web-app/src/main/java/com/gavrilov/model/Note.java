@@ -1,6 +1,6 @@
 package com.gavrilov.model;
 
-import com.sun.istack.internal.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -8,11 +8,11 @@ import javax.persistence.Entity;
 @Entity
 @Table(name = "note")
 public class Note extends com.gavrilov.model.Entity {
-    @NotNull
+    @NotEmpty
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "description", nullable = false)
     private String description;
 

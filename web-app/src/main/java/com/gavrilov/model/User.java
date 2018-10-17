@@ -1,30 +1,30 @@
 package com.gavrilov.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
 public class User extends com.gavrilov.model.Entity {
-    @NotNull
+    @NotEmpty
     @Column(name = "login", nullable = false)
     private String login;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "password", nullable = false)
     private String password;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "fio", nullable = false)
     private String fio;
 
-    @NotNull
     @Column(name = "enabled", nullable = false)
     private Integer enabled;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Note> notes;
 
     @ManyToOne

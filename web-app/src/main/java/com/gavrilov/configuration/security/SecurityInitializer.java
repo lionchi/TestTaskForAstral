@@ -1,4 +1,4 @@
-package com.gavrilov.configuration;
+package com.gavrilov.configuration.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
