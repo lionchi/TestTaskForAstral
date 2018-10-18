@@ -46,11 +46,13 @@
             <column name="user_id" type="bigint"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="user" baseColumnNames="user_role_id" constraintName="role_fk" referencedTableName="user_role"
-                                 referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="user" baseColumnNames="user_role_id" constraintName="role_fk"
+                                 referencedTableName="user_role"
+                                 referencedColumnNames="id"/>
 
-        <addForeignKeyConstraint baseTableName="note" baseColumnNames="user_id" constraintName="user_fk" referencedTableName="user"
-                                 referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="note" baseColumnNames="user_id" constraintName="user_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>

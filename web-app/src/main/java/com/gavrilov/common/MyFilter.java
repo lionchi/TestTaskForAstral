@@ -3,6 +3,9 @@ package com.gavrilov.common;
 import javax.servlet.*;
 import java.io.IOException;
 
+/*
+ Для корректного сохранения информациия в бд. Иначе будут иероглифы
+ */
 public class MyFilter implements Filter {
     private String encoding = "utf-8";
 

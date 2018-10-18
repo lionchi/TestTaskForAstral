@@ -1,6 +1,7 @@
 package com.gavrilov.controller;
 
 import com.gavrilov.common.AuthenticationFacade;
+import com.gavrilov.common.LoadImage;
 import com.gavrilov.model.Note;
 import com.gavrilov.model.User;
 import com.gavrilov.service.NoteService;
@@ -14,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +25,9 @@ public class AppController {
 
     @Autowired
     private AuthenticationFacade authenticationFacade;
+
+    @Autowired
+    private LoadImage loadImage;
 
     @Autowired
     private MessageSource messageSource;
@@ -49,11 +54,12 @@ public class AppController {
     }
 
     @RequestMapping(value = {"/newnote"}, method = RequestMethod.POST)
-    public String saveNote(@Valid Note note, BindingResult result, ModelMap modelMap) {
+    public String saveNote(@Valid Note note, BindingResult result, ModelMap modelMap) throws IOException {
         if (result.hasErrors()) {
             return "note";
         }
 
+        note.setImage(loadImage.getImage());
         noteService.saveNote(note, authenticationFacade.getAuthentication().getName());
 
         return "redirect:/noteList";

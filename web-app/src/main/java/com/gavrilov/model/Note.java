@@ -16,6 +16,10 @@ public class Note extends com.gavrilov.model.Entity {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Lob
+    @Column(name="image")
+    private byte[] image;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
@@ -37,6 +41,14 @@ public class Note extends com.gavrilov.model.Entity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public User getUser() {

@@ -15,6 +15,7 @@
     <tr>
         <th width="100">Наименование</th>
         <th width="100">Описание</th>
+        <th width="100">Изображение</th>
         <th width="100"></th>
         <th width="100"></th>
     </tr>
@@ -24,15 +25,16 @@
         <tr>
             <td>${note.name}</td>
             <td>${note.description}</td>
-            <td><a href="<c:url value='/edit-note-${note.id}' />"class="btn btn-success custom-width">редактор</a></td>
-            <td><a href="<c:url value='/delete-note-${note.id}' />"class="btn btn-danger custom-width">удалить</a></td>
+            <td><img width="200" height="100" src="<c:url value="/DisplayImageServlet?ID=${note.id}"/>"/></td>
+            <td><a href="<c:url value='/edit-note-${note.id}' />" class="btn btn-success custom-width">редактор</a></td>
+            <td><a href="<c:url value='/delete-note-${note.id}' />" class="btn btn-danger custom-width">удалить</a></td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 </div>
 <div class="well">
-    <a href="<c:url value='/newnote' />"class="btn btn-success">Добавить новую заметку</a>
+    <a href="<c:url value='/newnote' />" class="btn btn-success">Добавить новую заметку</a>
 </div>
 <form action="/logout" method="post">
     <input type="hidden"
