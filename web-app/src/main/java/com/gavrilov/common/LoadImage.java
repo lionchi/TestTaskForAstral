@@ -2,8 +2,8 @@ package com.gavrilov.common;
 
 import org.springframework.stereotype.Component;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Random;
 
@@ -15,7 +15,7 @@ public class LoadImage {
     public byte[] getImage() throws IOException {
         String stringUrl = String.format("https://avatars.dicebear.com/v2/identicon/%s", getValue());
         URL url = new URL(stringUrl);
-        HttpURLConnection content = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection content = (HttpsURLConnection) url.openConnection();
         content.setRequestMethod("GET");
 
         InputStream input = content.getInputStream();
